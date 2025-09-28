@@ -9,7 +9,7 @@
   </head>
   <body>
     <header>
-      <h1>התחברות</h1>
+      <h1>הרשמה</h1>
       <nav>
         <a href="">1</a>
         <a href="">2</a>
@@ -41,13 +41,22 @@
           id="password"
           name="password"
         />
+        <label for="password">אישור סיסמא</label>
+        <input
+          type="text"
+          required
+          minlength="2"
+          maxlength="10"
+          id="confirm-password"
+          name="confirm-password"
+        />
         <h5 id="password-error"></h5>
         <input id="submit" type="submit" value="שלח" />
       </form>
 
-      <p><a href="./register.html">?לא רשום</a></p>
+      <p><a href="./login.html">?כבר רשום</a></p>
     </main>
   </body>
 </html>
 
-<script src="../js/login.js"></script>
+<script src="../js/signup.js"></script>

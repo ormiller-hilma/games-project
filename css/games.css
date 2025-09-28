@@ -1,9 +1,11 @@
 #container {
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: center;
-    margin: 50px 20px;
+    margin: 50px 40px;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .games {
@@ -19,4 +21,13 @@
 .games:hover {
     background-color: rgb(225, 241, 255);
     cursor: pointer;
+}
+
+img {
+    margin-top: 15px;
+}
+
+a{
+    text-decoration: none;
+    color: black
 }
