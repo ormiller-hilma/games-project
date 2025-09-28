@@ -15,14 +15,17 @@ document
     doesUserExists = localStorage.getItem(user) !== null;
 
     if (doesUserExists === false) {
-      alert("Username does not exist");
+      //alert("שם המשתמש לא קיים");
+      const userNameError = document.getElementById("username-error")
+      userNameError.innerHTML = "שם המשתמש לא קיים"
       return;
     }
     if (localStorage.getItem(user) === password) {
-      alert("Correct! loging in");
+      alert("הכל תקין! ההתחברות מתבצעת");
       return;
     }
-
-    alert("Password is inccorect");
+    const passwordError = document.getElementById("password-error")
+    passwordError.innerHTML = "הסיסמא שגויה"
+    //alert("הסיסמא שגויה");
 
   });
