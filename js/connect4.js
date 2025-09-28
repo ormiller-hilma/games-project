@@ -1,29 +1,77 @@
+let board = []
+let divBoard = []
+
+const body = document.querySelector("body")
+const switchPlayer = document.getElementById("switchPlayer")
+let currentPlayer = "red"
+
 function changePlayer() {
-    if (currentPlayer==="red") {
-        currentPlayer="yellow"
-        body.style.backgroundColor="yellow"
+    if (currentPlayer === "red") {
+        currentPlayer = "yellow"
+        body.style.backgroundColor = "yellow"
     }
     else {
-        currentPlayer="red";
-        body.style.backgroundColor="red";
+        currentPlayer = "red";
+        body.style.backgroundColor = "red";
     }
 }
 
-let container = document.getElementById("container");
+function createBoard() {
+    const rows = 7;
+    const columns = 6;
+    divBoard = [[], [], [], [], [], [], []]; // array with 7 columns
+    const container = document.getElementById("container");
 
-let board = [];
-for(let i=0; i<6; i++) {
-    let row = [];
-    for (let j=0; j<7; j++){
-        let square = document.createElement("div");
-        container.appendChild(square)
-        row.push(square);
+    for (let i = 0; i < columns; i++) {
+        for (let j = 0; j < rows; j++) {
+            const square = document.createElement("div");
+            container.appendChild(square)
+            divBoard[j][i] = square;
+        }
     }
-    board.push(row);
-}
-console.log(board);
+    console.log(divBoard);
 
-let body = document.querySelector("body")
-let switchPlayer = document.getElementById("switchPlayer")
-let currentPlayer = "red"
+    board = [[], [], [], [], [], [], []]; // array with 7 columns
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < columns; j++) {
+            board[i].push(0);
+        }
+    }
+    console.log(board);
+}
+
+function getAvilableSlotInColumn(columnArray) {
+    for (let i = 0; i < columnArray.length; i++) {
+        if (columnArray[columnArray.length - i - 1] === 0) {
+            return columnArray.length - i - 1;
+        }
+    }
+    return -1; // no empty slots in column
+}
+
+function setPiece(columnIndex, color) {
+    const columnArray = board[columnIndex];
+    avilableSlot = getAvilableSlotInColumn(columnArray) // gets the first empty slot
+    if (avilableSlot === -1) return;
+    board[columnIndex][avilableSlot] = color.charAt(0).toUpperCase();
+    divBoard[columnIndex][avilableSlot].style.backgroundColor = color;
+    console.log(board);
+}
+
+
+document.addEventListener('keydown', function (event) {
+    const key = event.key; // What key was pressed
+    //const code = event.code; Physical key on the keyboard
+    console.log(`Key pressed: ${key}`);
+    setPiece(key - 1, currentPlayer)
+    changePlayer();
+});
+
+createBoard();
+setPiece(0, currentPlayer);
+setPiece(0, currentPlayer);
+changePlayer();
+setPiece(0, currentPlayer);
+setPiece(0, currentPlayer);
+
 switchPlayer.addEventListener("click", changePlayer)

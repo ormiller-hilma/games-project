@@ -1,33 +1,34 @@
 #container {
-    width: 700px;
-    height: 550px;
-    display: grid;
-    background-color: rgb(21,106,211);
-    grid-template-columns: repeat(7,auto);
-    grid-template-rows: repeat(6,auto);
-    border: 1px solid black;
-    gap: 5px;
-    padding: 5px;
+  width: 600px;
+  height: 450px;
+  display: grid;
+  background-color: rgb(21, 106, 211);
+  grid-template-columns: repeat(7, auto);
+  grid-template-rows: repeat(6, auto);
+  border: 1px solid black;
+  gap: 5px;
+  padding: 5px;
+  z-index: 20;
 }
 
 #container div {
-    border: 1px solid black;
-    border-radius: 50%;
-    background-color: white;
-    cursor: pointer;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
 }
 
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 15px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto;
 }
 
-body{
-    text-align: center;
+body {
+  text-align: center;
 }
 
 button {
-    font-size: 30px;
+  font-size: 30px;
 }
