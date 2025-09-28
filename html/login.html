@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/register.css" />
+  </head>
+  <body>
+    <header><h1>Log in into your account</h1></header>
+
+    <div id="square-background"></div>
+
+    <form id="data-form">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        required
+        minlength="2"
+        maxlength="10"
+        id="username"
+        name="username"
+      />
+      <label for="password">Password</label>
+      <input
+        type="text"
+        required
+        minlength="2"
+        maxlength="10"
+        id="password"
+        name="password"
+      />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <p><a href="#">Don't have an account yet?</a></p>
+  </body>
+</html>
+
+<script src="../js/login.js"></script>
