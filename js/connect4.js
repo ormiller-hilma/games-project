@@ -1,8 +1,7 @@
-console.log(localStorage.key)
 let board = [];
 let divBoard = [];
-let countRed = localStorage.getItem("redWins");
-let countYellow = localStorage.getItem("yellowWins");
+// let countRed = localStorage.getItem("redWins");
+// let countYellow = localStorage.getItem("yellowWins");
 let canPlay = true;
 let isGameOver = false;
 
@@ -16,11 +15,17 @@ if (isNaN(sessionPointsRed) || isNaN(sessionPointsYellow)) {
     sessionStorage.setItem("yellowPoints", sessionPointsYellow.toString());
 }
 
+let countRed = parseInt(localStorage.getItem("redWins"));
+let countYellow = parseInt(localStorage.getItem("yellowWins"));
 
-if (countRed === null || countYellow === null) {
-    localStorage.setItem("redWins", 0)
-    localStorage.setItem("yellowWins", 0)
+if (isNaN(countRed) || isNaN(countYellow)) {
+    countRed = 0;
+    countYellow =  0;
+    console.log(countRed + " " + countYellow)
+    localStorage.setItem("redWins", countRed.toString());
+    localStorage.setItem("yellowWins", countYellow.toString());
 }
+
 console.log("sdsadfsadasd " + sessionPointsRed)
 console.log("sdaasdadasdada " + sessionPointsYellow)
 
