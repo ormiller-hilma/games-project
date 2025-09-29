@@ -46,6 +46,9 @@ function createBoard() {
             const square = document.createElement("div");
             container.appendChild(square)
             divBoard[j][i] = square;
+            square.addEventListener("click", () => {
+                inputToColumn(j);
+            });
         }
     }
     //console.log(divBoard);
@@ -75,8 +78,27 @@ function setPiece(columnIndex, color) {
     board[columnIndex][avilableSlot] = color.charAt(0).toUpperCase();
     divBoard[columnIndex][avilableSlot].style.backgroundColor = color;
     console.log(board);
+    // Check for wins
     checkWinnerColumn(board[columnIndex])
     checkWinnerRow(columnIndex, avilableSlot)
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            checkWinnerDiagonal(i, j);
+        }
+    }
+    // Check for draw
+    if (isBoardFull()) {
+        setWinner("Draw")
+    }
+}
+
+function isBoardFull() {
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            if (board[i][j] === 0) return false; // board not filled
+        }
+    }
+    return true; // board is filled
 }
 
 function audioPlay() {
@@ -88,7 +110,6 @@ function audioPlay() {
 }
 
 function setWinner(color) {
-    if (color === "0") return;
     //console.log("winner")
     //console.log(color)
     winner = color;
@@ -103,6 +124,13 @@ function setWinner(color) {
         countYellow++;
         localStorage.setItem("yellowWins", countYellow)
         audioPlay()
+        turnInfo.innerHTML = "האדום מנצח";
+    }
+    if (color === "Y") {
+        turnInfo.innerHTML = "הצהוב מנצח";
+    }
+    if (color === "Draw") {
+        turnInfo.innerHTML = "תקו";
     }
     // alert("the winner is " + color)
 }
@@ -188,11 +216,8 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
 }
 
 
-document.addEventListener('keydown', function (event) {
-    const key = event.key; // What key was pressed
-    //const code = event.code; Physical key on the keyboard
-
-    const avilableSlot = getAvilableSlotInColumn(board[key - 1]);
+function inputToColumn(columnIndex) {
+    const avilableSlot = getAvilableSlotInColumn(board[columnIndex]);
     if (avilableSlot === -1) return; // return if not available slot
 
     const fallTime = 600;
@@ -203,27 +228,24 @@ document.addEventListener('keydown', function (event) {
     fallingDiv.classList.add("falling-piece");
     fallingDiv.style.backgroundColor = currentPlayer;
     setChildPiecePos(fallingDiv, startingPosition);
-    divBoard[key - 1][avilableSlot].appendChild(fallingDiv);
+    divBoard[columnIndex][avilableSlot].appendChild(fallingDiv);
     moveDown(fallingDiv, startingPosition, amountOfFrames, fallTime);
 
-    //console.log(`Key pressed: ${key}`);
-
-    setTimeout(setPiece, fallTime, key - 1, currentPlayer);
-
-    setTimeout(() => {
-        for (let i = 0; i < board.length; i++) {
-            for (let j = 0; j < board[0].length; j++) {
-                checkWinnerDiagonal(i, j);
-            }
-        }
-
-    }, fallTime + 100)
+    setTimeout(setPiece, fallTime, columnIndex, currentPlayer);
 
     setTimeout(function () {
         fallingDiv.remove();
     }, fallTime);
     changePlayer();
+}
+
+document.addEventListener('keydown', function (event) {
+    const key = event.key; // What key was pressed
+    if (key < '1' || key > '7') return;
+    inputToColumn(key - 1);
+
 });
+
 
 createBoard();
 // setPiece(0, currentPlayer); changePlayer();
