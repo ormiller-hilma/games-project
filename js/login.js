@@ -22,6 +22,7 @@ document
     }
     if (localStorage.getItem(user) === password) {
       alert("הכל תקין! ההתחברות מתבצעת");
+      window.location.href = "../html/games.html"
       return;
     }
     const passwordError = document.getElementById("password-error")

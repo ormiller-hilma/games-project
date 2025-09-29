@@ -12,6 +12,7 @@ main{
   height: 450px;
   margin: 25px auto;
   border-radius: 15%;
+  background-color: rgb(255, 244, 230);
 }
 
 #data-form {
