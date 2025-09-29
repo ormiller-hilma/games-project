@@ -107,6 +107,8 @@ function setPiece(columnIndex, color) {
     board[columnIndex][avilableSlot] = color.charAt(0).toUpperCase(); // sets visual board to color
     divBoard[columnIndex][avilableSlot].style.backgroundColor = color; // sets square to color
 
+    changePlayer();
+
     // check for wins
 
     checkWinnerColumn(columnIndex)
@@ -313,7 +315,7 @@ function inputToColumn(columnIndex) {
         fallingDiv.remove();
         canPlay = true;
     }, fallTime);
-    changePlayer();
+    //changePlayer();
 }
 
 // keyboard input
