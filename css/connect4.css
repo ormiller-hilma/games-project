@@ -58,3 +58,41 @@ h2 {
   height: 200px;
   border-radius: 50%;
 }
+
+#end-game-screen {
+  visibility: hidden;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+#screen-background {
+  width: 350px;
+  height: 250px;
+  background-color: rgb(236, 172, 88);
+  border-radius: 12%;
+  border: rgb(90, 58, 11) solid 6px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 25px;
+}
+
+#screen-background button {
+  width: 180px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 25px;
+}
+
+#screen-background p {
+  font-size: 50px;
+}
