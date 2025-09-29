@@ -10,7 +10,7 @@ let currentPlayer = "red"
 let winner = "";
 
 function changePlayer() {
-    if (winner==="") {
+    if (winner === "") {
         if (currentPlayer === "red") {
             currentPlayer = "yellow"
             turnInfo.innerHTML = "תור הצהוב"
@@ -62,7 +62,7 @@ function getAvilableSlotInColumn(columnArray) {
 function setPiece(columnIndex, color) {
     const columnArray = board[columnIndex];
     avilableSlot = getAvilableSlotInColumn(columnArray) // gets the first empty slot
-    if (avilableSlot === -1) return;
+    if (avilableSlot === -1) return; // return if no avilable slot
     board[columnIndex][avilableSlot] = color.charAt(0).toUpperCase();
     divBoard[columnIndex][avilableSlot].style.backgroundColor = color;
     console.log(board);
@@ -70,17 +70,26 @@ function setPiece(columnIndex, color) {
     checkWinnerRow(columnIndex, avilableSlot)
 }
 
-function checkWinnerColumn(column){
+function setWinner(color) {
+    if (color === "0") return;
+    console.log("winner")
+    console.log(color)
+    winner = color;
+    if (color === "R") {
+        turnInfo.innerHTML = "האדום מנצח"
+    }
+    if (color === "Y") {
+        turnInfo.innerHTML = "הצהוב מנצח"
+    }
+    alert("the winner is " + color)
+}
+
+function checkWinnerColumn(column) {
     console.log(column)
-    for(let i=0; i<column.length-3; i++) {
-        if(column[i]===column[i+1]&&column[i+1]===column[i+2]&&column[i+2]===column[i+3]){
-            if(column[i]==="Y"){
-                winner = column[i]
-                turnInfo.innerHTML = "הצהוב מנצח"
-            }
-            if(column[i]==="R"){
-                winner = column[i]
-                turnInfo.innerHTML = "האדום מנצח"
+    for (let i = 0; i < column.length - 3; i++) {
+        if (column[i] === column[i + 1] && column[i + 1] === column[i + 2] && column[i + 2] === column[i + 3]) {
+            if (column[i] !== 0) {
+                setWinner(column[i]);
             }
         }
     }
@@ -90,39 +99,118 @@ function checkWinnerRow(columnIndex, rowIndex) {
     // console.log("row: " + rowIndex)
     // console.log("column: " + columnIndex)
     let color = board[columnIndex][rowIndex];
-    for (let i=0; i<4; i++) {
-        if(board[i][rowIndex]===color&&board[i+1][rowIndex]===color&&
-            board[i+2][rowIndex]===color&&board[i+3][rowIndex]
-        ){
-            console.log("winner")
-            console.log(color)
-            if(color==="R"){
-                winner = color
-                turnInfo.innerHTML = "האדום מנצח"
-            }
-            if(color==="Y"){
-                winner = color
-                turnInfo.innerHTML = "הצהוב מנצח"
-            }
+    for (let i = 0; i < 4; i++) {
+        if (board[i][rowIndex] === color && board[i + 1][rowIndex] === color &&
+            board[i + 2][rowIndex] === color && board[i + 3][rowIndex]
+        ) {
+            setWinner(color);
         }
     }
+}
+
+function checkWinnerDiagonal(columnIndex, rowIndex) {
+    const color = board[columnIndex][rowIndex];
+    if (color === 0) {
+        return;
+    }
+    let nextColumnIndex;
+    let nextRowIndex;
+    let colorCounter;
+    //
+    // First diagonal
+    //
+    nextColumnIndex = columnIndex + 1;
+    nextRowIndex = rowIndex - 1;
+    colorCounter = 1;
+    for (let i = 0; i < board.length; i++) {
+        if (nextColumnIndex >= board.length || nextRowIndex >= board[0].length) {
+            break; // out of bounds of array
+        }
+        if (board[nextColumnIndex][nextRowIndex] !== color) {
+            break; // no wins in this diagonal
+        }
+        //
+        colorCounter++;
+        nextColumnIndex++;
+        nextRowIndex--;
+        if (colorCounter >= 4) {
+            setWinner(color);
+        }
+    }
+
+    //
+    // Second diagonal
+    //
+    nextColumnIndex = columnIndex - 1;
+    nextRowIndex = rowIndex + 1;
+    colorCounter = 0;
+    for (let i = 0; i < board.length; i++) {
+        if (nextColumnIndex < 0 || nextRowIndex < 0) {
+            break; // out of bounds of array
+        }
+        if (board[nextColumnIndex][nextRowIndex] !== color) {
+            break; // no wins in this diagonal
+        }
+        //
+        colorCounter++;
+        nextColumnIndex--;
+        nextRowIndex++;
+        if (colorCounter >= 4) {
+            setWinner(color);
+        }
+    }
+
 }
 
 
 document.addEventListener('keydown', function (event) {
     const key = event.key; // What key was pressed
     //const code = event.code; Physical key on the keyboard
+
+    const avilableSlot = getAvilableSlotInColumn(board[key - 1]);
+    if (avilableSlot === -1) return; // return if not available slot
+
+    const fallTime = 1000;
+    const startingPosition = -500;
+    const amountOfFrames = 1000;
+
+    const fallingDiv = document.createElement("div")
+    fallingDiv.classList.add("falling-piece");
+    fallingDiv.style.backgroundColor = currentPlayer;
+    setChildPiecePos(fallingDiv, startingPosition);
+    divBoard[key - 1][avilableSlot].appendChild(fallingDiv);
+    moveDown(fallingDiv, startingPosition, amountOfFrames, fallTime);
+
     console.log(`Key pressed: ${key}`);
-    setPiece(key - 1, currentPlayer)
+
+    setTimeout(setPiece, fallTime, key - 1, currentPlayer);
+
+    setTimeout(() => {
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[0].length; j++) {
+                checkWinnerDiagonal(i, j);
+            }
+        }
+
+    }, fallTime + 100)
+
+    setTimeout(function () {
+        fallingDiv.remove();
+    }, fallTime);
     changePlayer();
 });
 
 createBoard();
-setPiece(0, currentPlayer);
-setPiece(0, currentPlayer);
-changePlayer();
-setPiece(0, currentPlayer);
-setPiece(0, currentPlayer);
+setPiece(0, currentPlayer); changePlayer();
+setPiece(1, currentPlayer); changePlayer(); setPiece(1, currentPlayer); changePlayer();
+setPiece(2, currentPlayer); setPiece(2, currentPlayer); changePlayer(); setPiece(2, currentPlayer); changePlayer();
+setPiece(3, currentPlayer); setPiece(3, currentPlayer); setPiece(3, currentPlayer); changePlayer(); //setPiece(3, currentPlayer);
+checkWinnerDiagonal(0, 5);
+// setPiece(0, currentPlayer);
+// setPiece(0, currentPlayer);
+// changePlayer();
+// setPiece(0, currentPlayer);
+// setPiece(0, currentPlayer);
 
 switchPlayer.addEventListener("click", changePlayer)
 
@@ -140,8 +228,5 @@ function moveDown(piece, startingPos, amountOfFrames, time) {
     }
 }
 
-const testDiv = document.createElement("div")
-testDiv.id = "hello"
-divBoard[0][5].appendChild(testDiv)
-moveDown(testDiv, -500, 1000, 1000)
+
 //setTimeout(setChildPiecePos(testDiv, -100), 9000);
