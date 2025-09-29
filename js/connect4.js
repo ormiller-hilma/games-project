@@ -5,11 +5,21 @@ let countRed = localStorage.getItem("redWins");
 let countYellow = localStorage.getItem("yellowWins");
 let canPlay = true;
 let isGameOver = false;
+let sessionPointsRed = sessionStorage.getItem("redPoints")
+let sessionPointsYellow = sessionStorage.getItem("yellowPoints")
 
 if (countRed === null || countYellow === null) {
     localStorage.setItem("redWins", 0)
     localStorage.setItem("yellowWins", 0)
 }
+
+if (sessionPointsRed === null || sessionPointsYellow === null) {
+    sessionStorage.setItem("redPoints", 0)
+    sessionStorage.setItem("yellowPoints", 0)
+}
+
+sessionPointsRed = parseInt(sessionPointsRed)
+sessionPointsYellow = parseInt(sessionPointsYellow)
 
 const body = document.querySelector("body")
 const newGame = document.getElementById("newGame")
@@ -123,19 +133,23 @@ function setWinner(color) {
     if (color === "R") {
         turnInfo.innerHTML = "האדום מנצח"
         countRed++;
+        sessionPointsRed++;
+        console.log("I AM A RED POINT++")
         localStorage.setItem("redWins", countRed)
+        sessionStorage.setItem("redPoints", sessionPointsRed)
         audioPlay()
     }
     if (color === "Y") {
         turnInfo.innerHTML = "הצהוב מנצח"
         countYellow++;
+        sessionPointsYellow++;
         localStorage.setItem("yellowWins", countYellow)
+        sessionStorage.setItem("yellowPoints", sessionPointsYellow)
         audioPlay()
-        turnInfo.innerHTML = "האדום מנצח";
     }
-    if (color === "Y") {
-        turnInfo.innerHTML = "הצהוב מנצח";
-    }
+    // if (color === "Y") {
+    //     turnInfo.innerHTML = "הצהוב מנצח";
+    // }
     if (color === "Draw") {
         turnInfo.innerHTML = "תקו";
     }
@@ -280,7 +294,7 @@ function moveDown(piece, startingPos, amountOfFrames, time) {
     }
 }
 
-function showGameOverScreen(winner, points1 = 0, points2 = 0) {
+function showGameOverScreen(winner) {
     const screen = document.getElementById("end-game-screen");
     const gameoverText = document.getElementById("gameover-text");
     const pointsText = document.getElementById("points");
@@ -296,7 +310,7 @@ function showGameOverScreen(winner, points1 = 0, points2 = 0) {
     }
     screen.classList.add("swirlingObject");
     screen.style.visibility = "visible";
-    pointsText.innerHTML = `${points1} | ${points2}`
+    pointsText.innerHTML = `${sessionPointsYellow} | ${sessionPointsRed}`
 }
 
 createBoard();
