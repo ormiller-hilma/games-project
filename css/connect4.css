@@ -1,6 +1,6 @@
 #container {
-  width: 600px;
-  height: 450px;
+  width: 490px;
+  height: 420px;
   display: grid;
   background-color: rgb(21, 106, 211);
   grid-template-columns: repeat(7, auto);
@@ -23,6 +23,7 @@ main {
   justify-content: center;
   align-items: center;
   margin: 15px auto;
+  justify-content: space-around;
 }
 
 body {
@@ -31,4 +32,15 @@ body {
 
 button {
   font-size: 30px;
+}
+
+h2 {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+#yellow, #red {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
 }
