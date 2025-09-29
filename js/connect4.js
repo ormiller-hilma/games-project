@@ -1,6 +1,12 @@
 console.log(localStorage.key)
 let board = []
 let divBoard = []
+let countRed = localStorage.getItem("redWins");
+let countYellow = localStorage.getItem("yellowWins");
+if(countRed === null || countYellow === null) {
+    localStorage.setItem("redWins", 0)
+    localStorage.setItem("yellowWins", 0)
+}
 
 const body = document.querySelector("body")
 const switchPlayer = document.getElementById("switchPlayer")
@@ -9,6 +15,8 @@ const yellowBox = document.getElementById("yellow")
 const redBox = document.getElementById("red")
 let currentPlayer = "red"
 let winner = "";
+
+const audio = new Audio("../audio/winner.mp3")
 
 function changePlayer() {
     if (winner === "") {
@@ -71,6 +79,14 @@ function setPiece(columnIndex, color) {
     checkWinnerRow(columnIndex, avilableSlot)
 }
 
+function audioPlay() {
+    audio.play()
+    setTimeout(function(){
+        audio.pause();
+        audio.currentTime = 0;
+    },3000)
+}
+
 function setWinner(color) {
     if (color === "0") return;
     //console.log("winner")
@@ -78,11 +94,17 @@ function setWinner(color) {
     winner = color;
     if (color === "R") {
         turnInfo.innerHTML = "האדום מנצח"
+        countRed++;
+        localStorage.setItem("redWins", countRed)
+        audioPlay()
     }
     if (color === "Y") {
         turnInfo.innerHTML = "הצהוב מנצח"
+        countYellow++;
+        localStorage.setItem("yellowWins", countYellow)
+        audioPlay()
     }
-    alert("the winner is " + color)
+    // alert("the winner is " + color)
 }
 
 function checkWinnerColumn(column) {
@@ -231,5 +253,5 @@ function moveDown(piece, startingPos, amountOfFrames, time) {
     }
 }
 
-
+changePlayer()
 //setTimeout(setChildPiecePos(testDiv, -100), 9000);
