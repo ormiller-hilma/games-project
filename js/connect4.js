@@ -3,16 +3,26 @@ let divBoard = []
 
 const body = document.querySelector("body")
 const switchPlayer = document.getElementById("switchPlayer")
+const turnInfo = document.getElementById("turnInfo")
+const yellowBox = document.getElementById("yellow")
+const redBox = document.getElementById("red")
 let currentPlayer = "red"
+let winner = "";
 
 function changePlayer() {
-    if (currentPlayer === "red") {
-        currentPlayer = "yellow"
-        body.style.backgroundColor = "yellow"
-    }
-    else {
-        currentPlayer = "red";
-        body.style.backgroundColor = "red";
+    if (winner==="") {
+        if (currentPlayer === "red") {
+            currentPlayer = "yellow"
+            turnInfo.innerHTML = "תור הצהוב"
+            yellowBox.style.backgroundColor = "yellow"
+            redBox.style.backgroundColor = ""
+        }
+        else {
+            currentPlayer = "red";
+            turnInfo.innerHTML = "תור האדום"
+            redBox.style.backgroundColor = "red";
+            yellowBox.style.backgroundColor = ""
+        }
     }
 }
 
@@ -56,6 +66,46 @@ function setPiece(columnIndex, color) {
     board[columnIndex][avilableSlot] = color.charAt(0).toUpperCase();
     divBoard[columnIndex][avilableSlot].style.backgroundColor = color;
     console.log(board);
+    checkWinnerColumn(board[columnIndex])
+    checkWinnerRow(columnIndex, avilableSlot)
+}
+
+function checkWinnerColumn(column){
+    console.log(column)
+    for(let i=0; i<column.length-3; i++) {
+        if(column[i]===column[i+1]&&column[i+1]===column[i+2]&&column[i+2]===column[i+3]){
+            if(column[i]==="Y"){
+                winner = column[i]
+                turnInfo.innerHTML = "הצהוב מנצח"
+            }
+            if(column[i]==="R"){
+                winner = column[i]
+                turnInfo.innerHTML = "האדום מנצח"
+            }
+        }
+    }
+}
+
+function checkWinnerRow(columnIndex, rowIndex) {
+    // console.log("row: " + rowIndex)
+    // console.log("column: " + columnIndex)
+    let color = board[columnIndex][rowIndex];
+    for (let i=0; i<4; i++) {
+        if(board[i][rowIndex]===color&&board[i+1][rowIndex]===color&&
+            board[i+2][rowIndex]===color&&board[i+3][rowIndex]
+        ){
+            console.log("winner")
+            console.log(color)
+            if(color==="R"){
+                winner = color
+                turnInfo.innerHTML = "האדום מנצח"
+            }
+            if(color==="Y"){
+                winner = color
+                turnInfo.innerHTML = "הצהוב מנצח"
+            }
+        }
+    }
 }
 
 

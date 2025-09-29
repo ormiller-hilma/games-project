@@ -33,5 +33,5 @@ document
     // password = value
 
     localStorage.setItem(user, password)
-
+    window.location.href = "../html/games.html"
   });
