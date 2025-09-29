@@ -19,6 +19,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 60px;
+  height: 60px;
 }
 
 main {
@@ -43,8 +45,9 @@ button {
   background-color: white;
   position: absolute;
   background-color: blue;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
+  z-index: 3;
 }
 
 h2 {
