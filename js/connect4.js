@@ -75,3 +75,23 @@ setPiece(0, currentPlayer);
 setPiece(0, currentPlayer);
 
 switchPlayer.addEventListener("click", changePlayer)
+
+
+
+function setChildPiecePos(piece, pos) {
+    piece.style.setProperty('transform', `translateY(${pos}px)`, 'important');
+}
+
+function moveDown(piece, startingPos, amountOfFrames, time) {
+    let updatedPosition = startingPos;
+    for (let i = 0; i < amountOfFrames; i++) {
+        updatedPosition -= startingPos / amountOfFrames;
+        setTimeout(setChildPiecePos, i * (time / amountOfFrames), piece, updatedPosition);
+    }
+}
+
+const testDiv = document.createElement("div")
+testDiv.id = "hello"
+divBoard[0][5].appendChild(testDiv)
+moveDown(testDiv, -500, 1000, 1000)
+//setTimeout(setChildPiecePos(testDiv, -100), 9000);
