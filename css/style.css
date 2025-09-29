@@ -17,7 +17,8 @@ header {
     padding-bottom: 15px;
     position: sticky;
     top: 0;
-    width: 100%
+    width: 100%;
+    z-index: 100;
 }
 
 nav {
@@ -34,7 +35,7 @@ nav a {
     padding: 5px;
     background-color: rgb(184, 196, 196);
     text-decoration: none;
-    color: black
+    color: black;
 }
 
 nav a:hover {
