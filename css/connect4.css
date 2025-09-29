@@ -57,6 +57,15 @@ h2 {
   height: 50px;
   border-radius: 50%;
   margin-top: 10px;
+  border: 1px solid black;
+}
+
+#yellow {
+  background-color: yellow;
+}
+
+#red {
+  background-color: red;
 }
 
 #top {

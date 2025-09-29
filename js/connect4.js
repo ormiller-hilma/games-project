@@ -26,18 +26,14 @@ function changePlayer() {
         if (currentPlayer === "red") {
             currentPlayer = "yellow"
             turnInfo.innerHTML = "תור הצהוב"
-            yellowBox.style.backgroundColor = "yellow"
-            yellowBox.style.border = "1px solid black"
-            redBox.style.backgroundColor = ""
-            redBox.style.border = ""
+            yellowBox.style.opacity = "100%"
+            redBox.style.opacity = "25%"
         }
         else {
             currentPlayer = "red";
             turnInfo.innerHTML = "תור האדום"
-            redBox.style.backgroundColor = "red";
-            redBox.style.border = "1px solid black"
-            yellowBox.style.backgroundColor = ""
-            yellowBox.style.border = ""
+            redBox.style.opacity = "100%"
+            yellowBox.style.opacity = "25%"
         }
     }
 }
