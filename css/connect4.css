@@ -71,20 +71,21 @@ h2 {
 #top {
   display: flex;
   justify-content: center;
-  gap: 10px
+  gap: 10px;
 }
 
 #end-game-screen {
   visibility: hidden;
   position: fixed;
   left: 50%;
-  top: 50%;
+  top: 56%;
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
   text-align: center;
+  font-family: sans-serif;
 }
 
 #screen-background {
@@ -97,6 +98,7 @@ h2 {
   align-items: center;
   flex-direction: column;
   row-gap: 25px;
+  font-family: sans-serif;
 }
 
 #screen-background button {
@@ -106,8 +108,29 @@ h2 {
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 25px;
+  font-family: sans-serif;
 }
 
 #screen-background p {
   font-size: 50px;
+  font-family: sans-serif;
+}
+
+.swirlingObject {
+  animation: swirlAnimation 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0s 1 normal
+    forwards;
+}
+
+@keyframes swirlAnimation {
+  0% {
+    opacity: 0;
+    transform: rotate(-540deg) scale(0) translate(-50%, -50%);
+    transform-origin: 50% 100%;
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(0) scale(1) translate(-50%, -50%);
+    transform-origin: 50% 100%;
+  }
 }

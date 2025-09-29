@@ -284,6 +284,7 @@ function showGameOverScreen(winner, points1 = 0, points2 = 0) {
     const screen = document.getElementById("end-game-screen");
     const gameoverText = document.getElementById("gameover-text");
     const pointsText = document.getElementById("points");
+
     if (winner === "R") {
         gameoverText.innerHTML = "המשחק נגמר אדום ניצח"
     }
@@ -293,6 +294,7 @@ function showGameOverScreen(winner, points1 = 0, points2 = 0) {
     if (winner === "Draw") {
         gameoverText.innerHTML = "תקו"
     }
+    screen.classList.add("swirlingObject");
     screen.style.visibility = "visible";
     pointsText.innerHTML = `${points1} | ${points2}`
 }
