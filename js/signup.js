@@ -34,7 +34,7 @@ document
     localStorage.setItem("username", user)
     alert("הכל תקין! ההרשמה מתבצעת");
     console.log(localStorage.key)
-    window.location.href = "../html/games.html"
+    window.location.href = "../html/login.html"
   });
 
     const userNameError = document.getElementById("username-error")

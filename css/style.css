@@ -34,6 +34,12 @@ nav a {
     padding: 5px;
     background-color: rgb(184, 196, 196);
     text-decoration: none;
+    color: black
+}
+
+nav a:hover {
+    background-color: rgb(160, 176, 176);
+    color:rgb(255, 255, 255)
 }
 
 h6 {

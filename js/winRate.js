@@ -9,3 +9,6 @@ const redtd = document.getElementById("red")
 
 redtd.innerHTML = redRate + "%"
 yellowtd.innerHTML = yellowRate + "%"
+
+document.getElementById("countyellow").innerHTML = yellowWins
+document.getElementById("countred").innerHTML = redWins

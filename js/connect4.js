@@ -24,13 +24,17 @@ function changePlayer() {
             currentPlayer = "yellow"
             turnInfo.innerHTML = "תור הצהוב"
             yellowBox.style.backgroundColor = "yellow"
+            yellowBox.style.border = "1px solid black"
             redBox.style.backgroundColor = ""
+            redBox.style.border = ""
         }
         else {
             currentPlayer = "red";
             turnInfo.innerHTML = "תור האדום"
             redBox.style.backgroundColor = "red";
+            redBox.style.border = "1px solid black"
             yellowBox.style.backgroundColor = ""
+            yellowBox.style.border = ""
         }
     }
 }
