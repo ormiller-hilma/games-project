@@ -101,7 +101,7 @@ function setPiece(columnIndex, color) {
     console.log(board);
     // Check for wins
     console.log("COLUMN:")
-    checkWinnerColumn(board[columnIndex])
+    checkWinnerColumn(columnIndex)
     console.log("ROW:")
     checkWinnerRow(columnIndex, avilableSlot)
     console.log("DIAGONAL:")
@@ -145,7 +145,6 @@ function setWinner(color) {
         console.log("I AM A RED POINT++")
         localStorage.setItem("redWins", countRed)
         sessionStorage.setItem("redPoints", sessionPointsRed)
-        audioPlay()
     }
     if (color === "Y") {
         turnInfo.innerHTML = "הצהוב מנצח"
@@ -153,43 +152,43 @@ function setWinner(color) {
         sessionPointsYellow++;
         localStorage.setItem("yellowWins", countYellow)
         sessionStorage.setItem("yellowPoints", sessionPointsYellow)
-        audioPlay()
     }
-    // if (color === "Y") {
-    //     turnInfo.innerHTML = "הצהוב מנצח";
-    // }
     if (color === "Draw") {
         turnInfo.innerHTML = "תקו";
     }
     isGameOver = true;
+    setTimeout(audioPlay, 800)
     setTimeout(() => {
         showGameOverScreen(color)
-    }, 800);
+    }, 1600);
     //alert("the winner is " + color)
 }
 
-function checkWinnerColumn(column) {
-    //console.log(column)
-    for (let i = 0; i < column.length - 3; i++) {
-        if (column[i] === column[i + 1] && column[i + 1] === column[i + 2] && column[i + 2] === column[i + 3]) {
-            if (column[i] !== 0) {
-                setWinner(column[i]);
+function checkWinnerColumn(columnIndex) {
+    for (let i = 0; i < board[columnIndex].length - 3; i++) {
+        if (board[columnIndex][i] === board[columnIndex][i + 1] && board[columnIndex][i + 1] === board[columnIndex][i + 2] && board[columnIndex][i + 2] === board[columnIndex][i + 3]) {
+            if (board[columnIndex][i] !== 0) {
+                setWinner(board[columnIndex][i]);
+                divBoard[columnIndex][i].classList.add("markedSquare");
+                divBoard[columnIndex][i + 1].classList.add("markedSquare");
+                divBoard[columnIndex][i + 2].classList.add("markedSquare");
+                divBoard[columnIndex][i + 3].classList.add("markedSquare");
             }
         }
     }
 }
 
 function checkWinnerRow(columnIndex, rowIndex) {
-    // console.log("row: " + rowIndex)
-    // console.log("column: " + columnIndex)
     let color = board[columnIndex][rowIndex];
     for (let i = 0; i < 4; i++) {
         if (board[i][rowIndex] === color && board[i + 1][rowIndex] === color &&
             board[i + 2][rowIndex] === color && board[i + 3][rowIndex] === color
         ) {
             setWinner(color);
-            console.log(board[i][rowIndex], board[i + 1][rowIndex],
-                board[i + 2][rowIndex], board[i + 3][rowIndex]);
+            divBoard[i][rowIndex].classList.add("markedSquare");
+            divBoard[i + 1][rowIndex].classList.add("markedSquare");
+            divBoard[i + 2][rowIndex].classList.add("markedSquare");
+            divBoard[i + 3][rowIndex].classList.add("markedSquare");
         }
     }
 }
@@ -201,13 +200,13 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
     }
     let nextColumnIndex;
     let nextRowIndex;
-    let colorCounter;
+    let pieceArray = [];
     //
     // First diagonal
     //
     nextColumnIndex = columnIndex + 1;
     nextRowIndex = rowIndex - 1;
-    colorCounter = 1;
+    pieceArray = [[columnIndex, rowIndex]];
     for (let i = 0; i < board.length; i++) {
         if (nextColumnIndex >= board.length || nextRowIndex >= board[0].length) {
             break; // out of bounds of array
@@ -216,12 +215,17 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
             break; // no wins in this diagonal
         }
         //
-        colorCounter++;
+        pieceArray.push([nextColumnIndex, nextRowIndex])
         nextColumnIndex++;
         nextRowIndex--;
-        if (colorCounter >= 4) {
-            console.log("DIAGONAL");
+        if (pieceArray.length >= 4) {
             setWinner(color);
+            // Mark squares
+            for (let i = 0; i < pieceArray.length; i++) {
+                const columnI = pieceArray[i][0];
+                const rowI = pieceArray[i][1];
+                divBoard[columnI][rowI].classList.add("markedSquare");
+            }
         }
     }
 
@@ -229,8 +233,8 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
     // Second diagonal
     //
     nextColumnIndex = columnIndex - 1;
-    nextRowIndex = rowIndex + 1;
-    colorCounter = 0;
+    nextRowIndex = rowIndex - 1;
+    pieceArray = [[columnIndex, rowIndex]];
     for (let i = 0; i < board.length; i++) {
         if (nextColumnIndex < 0 || nextRowIndex < 0) {
             break; // out of bounds of array
@@ -239,12 +243,19 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
             break; // no wins in this diagonal
         }
         //
-        colorCounter++;
+        pieceArray.push([nextColumnIndex, nextRowIndex]);
         nextColumnIndex--;
-        nextRowIndex++;
-        if (colorCounter >= 4) {
-            console.log("DIAGONAL 2");
+        nextRowIndex--;
+        if (pieceArray.length >= 4) {
             setWinner(color);
+            // Mark squares
+            for (let i = 0; i < pieceArray.length; i++) {
+                console.log(i);
+                console.log(pieceArray[i])
+                const columnI = pieceArray[i][0];
+                const rowI = pieceArray[i][1];
+                divBoard[columnI][rowI].classList.add("markedSquare");
+            }
         }
     }
 
