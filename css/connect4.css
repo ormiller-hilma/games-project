@@ -134,3 +134,16 @@ h2 {
     transform-origin: 50% 100%;
   }
 }
+
+#info {
+  background-color: rgb(255, 216, 216);
+  width:250px;
+  height: 400px;
+  position: absolute;
+  top: 250px;
+  right: 75px;
+  border: 2px dotted black;
+  border-radius: 25px;
+  font-size: 24px;
+  padding: 5px 10px;
+}
