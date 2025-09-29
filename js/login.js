@@ -16,7 +16,6 @@ document
 
     if (doesUserExists === false) {
       //alert("שם המשתמש לא קיים");
-      const userNameError = document.getElementById("username-error")
       userNameError.innerHTML = "שם המשתמש לא קיים"
       return;
     }
@@ -25,8 +24,18 @@ document
       window.location.href = "../html/games.html"
       return;
     }
-    const passwordError = document.getElementById("password-error")
     passwordError.innerHTML = "הסיסמא שגויה"
     //alert("הסיסמא שגויה");
 
   });
+
+    const userNameError = document.getElementById("username-error")
+    const passwordError = document.getElementById("password-error")
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    usernameInput.addEventListener("focus", function (){
+      userNameError.innerHTML = ""
+    })
+    passwordInput.addEventListener("focus", function (){
+      passwordError.innerHTML = ""
+    })
