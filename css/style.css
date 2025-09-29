@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: "M PLUS Rounded 1c", Arial, Helvetica, sans-serif;
 }
 
 header h1 {
@@ -33,10 +34,6 @@ nav a {
     padding: 5px;
     background-color: rgb(184, 196, 196);
     text-decoration: none;
-}
-
-body{
-    /* margin-top: 250px; */
 }
 
 h6 {
