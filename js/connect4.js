@@ -1,9 +1,12 @@
 console.log(localStorage.key)
-let board = []
-let divBoard = []
+let board = [];
+let divBoard = [];
 let countRed = localStorage.getItem("redWins");
 let countYellow = localStorage.getItem("yellowWins");
-if(countRed === null || countYellow === null) {
+let canPlay = true;
+let isGameOver = false;
+
+if (countRed === null || countYellow === null) {
     localStorage.setItem("redWins", 0)
     localStorage.setItem("yellowWins", 0)
 }
@@ -83,15 +86,19 @@ function setPiece(columnIndex, color) {
     divBoard[columnIndex][avilableSlot].style.backgroundColor = color;
     console.log(board);
     // Check for wins
+    console.log("COLUMN:")
     checkWinnerColumn(board[columnIndex])
+    console.log("ROW:")
     checkWinnerRow(columnIndex, avilableSlot)
+    console.log("DIAGONAL:")
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[0].length; j++) {
             checkWinnerDiagonal(i, j);
         }
     }
+    console.log("DRAW:")
     // Check for draw
-    if (isBoardFull()) {
+    if (isBoardFull() && winner === "") {
         setWinner("Draw")
     }
 }
@@ -107,10 +114,10 @@ function isBoardFull() {
 
 function audioPlay() {
     audio.play()
-    setTimeout(function(){
+    setTimeout(function () {
         audio.pause();
         audio.currentTime = 0;
-    },3000)
+    }, 3000)
 }
 
 function setWinner(color) {
@@ -136,7 +143,11 @@ function setWinner(color) {
     if (color === "Draw") {
         turnInfo.innerHTML = "תקו";
     }
-    // alert("the winner is " + color)
+    isGameOver = true;
+    setTimeout(() => {
+        showGameOverScreen(color)
+    }, 800);
+    //alert("the winner is " + color)
 }
 
 function checkWinnerColumn(column) {
@@ -156,9 +167,11 @@ function checkWinnerRow(columnIndex, rowIndex) {
     let color = board[columnIndex][rowIndex];
     for (let i = 0; i < 4; i++) {
         if (board[i][rowIndex] === color && board[i + 1][rowIndex] === color &&
-            board[i + 2][rowIndex] === color && board[i + 3][rowIndex]
+            board[i + 2][rowIndex] === color && board[i + 3][rowIndex] === color
         ) {
             setWinner(color);
+            console.log(board[i][rowIndex], board[i + 1][rowIndex],
+                board[i + 2][rowIndex], board[i + 3][rowIndex]);
         }
     }
 }
@@ -221,12 +234,15 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
 
 
 function inputToColumn(columnIndex) {
+    if (canPlay === false || isGameOver) return;
     const avilableSlot = getAvilableSlotInColumn(board[columnIndex]);
     if (avilableSlot === -1) return; // return if not available slot
 
     const fallTime = 600;
     const startingPosition = -800;
     const amountOfFrames = 1000;
+
+    canPlay = false;
 
     const fallingDiv = document.createElement("div")
     fallingDiv.classList.add("falling-piece");
@@ -239,6 +255,7 @@ function inputToColumn(columnIndex) {
 
     setTimeout(function () {
         fallingDiv.remove();
+        canPlay = true;
     }, fallTime);
     changePlayer();
 }
@@ -250,23 +267,9 @@ document.addEventListener('keydown', function (event) {
 
 });
 
-
-createBoard();
-// setPiece(0, currentPlayer); changePlayer();
-// setPiece(1, currentPlayer); changePlayer(); setPiece(1, currentPlayer); changePlayer();
-// setPiece(2, currentPlayer); setPiece(2, currentPlayer); changePlayer(); setPiece(2, currentPlayer); changePlayer();
-// setPiece(3, currentPlayer); setPiece(3, currentPlayer); setPiece(3, currentPlayer); changePlayer(); //setPiece(3, currentPlayer);
-// checkWinnerDiagonal(0, 5);
-// setPiece(0, currentPlayer);
-// setPiece(0, currentPlayer);
-// changePlayer();
-// setPiece(0, currentPlayer);
-// setPiece(0, currentPlayer);
-
-newGame.addEventListener("click", function() {
+newGame.addEventListener("click", function () {
     window.location.reload();
 })
-
 
 
 function setChildPiecePos(piece, pos) {
@@ -281,5 +284,22 @@ function moveDown(piece, startingPos, amountOfFrames, time) {
     }
 }
 
-changePlayer()
-//setTimeout(setChildPiecePos(testDiv, -100), 9000);
+function showGameOverScreen(winner, points1 = 0, points2 = 0) {
+    const screen = document.getElementById("end-game-screen");
+    const gameoverText = document.getElementById("gameover-text");
+    const pointsText = document.getElementById("points");
+    if (winner === "R") {
+        gameoverText.innerHTML = "המשחק נגמר אדום ניצח"
+    }
+    if (winner === "Y") {
+        gameoverText.innerHTML = "המשחק נגמר צהוב ניצח"
+    }
+    if (winner === "Draw") {
+        gameoverText.innerHTML = "תקו"
+    }
+    screen.style.visibility = "visible";
+    pointsText.innerHTML = `${points1} | ${points2}`
+}
+
+createBoard();
+changePlayer();
