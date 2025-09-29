@@ -40,7 +40,7 @@ function createBoard() {
             divBoard[j][i] = square;
         }
     }
-    console.log(divBoard);
+    //console.log(divBoard);
 
     board = [[], [], [], [], [], [], []]; // array with 7 columns
     for (let i = 0; i < board.length; i++) {
@@ -73,8 +73,8 @@ function setPiece(columnIndex, color) {
 
 function setWinner(color) {
     if (color === "0") return;
-    console.log("winner")
-    console.log(color)
+    //console.log("winner")
+    //console.log(color)
     winner = color;
     if (color === "R") {
         turnInfo.innerHTML = "האדום מנצח"
@@ -86,7 +86,7 @@ function setWinner(color) {
 }
 
 function checkWinnerColumn(column) {
-    console.log(column)
+    //console.log(column)
     for (let i = 0; i < column.length - 3; i++) {
         if (column[i] === column[i + 1] && column[i + 1] === column[i + 2] && column[i + 2] === column[i + 3]) {
             if (column[i] !== 0) {
@@ -135,6 +135,7 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
         nextColumnIndex++;
         nextRowIndex--;
         if (colorCounter >= 4) {
+            console.log("DIAGONAL");
             setWinner(color);
         }
     }
@@ -157,6 +158,7 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
         nextColumnIndex--;
         nextRowIndex++;
         if (colorCounter >= 4) {
+            console.log("DIAGONAL 2");
             setWinner(color);
         }
     }
@@ -171,8 +173,8 @@ document.addEventListener('keydown', function (event) {
     const avilableSlot = getAvilableSlotInColumn(board[key - 1]);
     if (avilableSlot === -1) return; // return if not available slot
 
-    const fallTime = 1000;
-    const startingPosition = -500;
+    const fallTime = 600;
+    const startingPosition = -800;
     const amountOfFrames = 1000;
 
     const fallingDiv = document.createElement("div")
@@ -182,7 +184,7 @@ document.addEventListener('keydown', function (event) {
     divBoard[key - 1][avilableSlot].appendChild(fallingDiv);
     moveDown(fallingDiv, startingPosition, amountOfFrames, fallTime);
 
-    console.log(`Key pressed: ${key}`);
+    //console.log(`Key pressed: ${key}`);
 
     setTimeout(setPiece, fallTime, key - 1, currentPlayer);
 
@@ -202,11 +204,11 @@ document.addEventListener('keydown', function (event) {
 });
 
 createBoard();
-setPiece(0, currentPlayer); changePlayer();
-setPiece(1, currentPlayer); changePlayer(); setPiece(1, currentPlayer); changePlayer();
-setPiece(2, currentPlayer); setPiece(2, currentPlayer); changePlayer(); setPiece(2, currentPlayer); changePlayer();
-setPiece(3, currentPlayer); setPiece(3, currentPlayer); setPiece(3, currentPlayer); changePlayer(); //setPiece(3, currentPlayer);
-checkWinnerDiagonal(0, 5);
+// setPiece(0, currentPlayer); changePlayer();
+// setPiece(1, currentPlayer); changePlayer(); setPiece(1, currentPlayer); changePlayer();
+// setPiece(2, currentPlayer); setPiece(2, currentPlayer); changePlayer(); setPiece(2, currentPlayer); changePlayer();
+// setPiece(3, currentPlayer); setPiece(3, currentPlayer); setPiece(3, currentPlayer); changePlayer(); //setPiece(3, currentPlayer);
+// checkWinnerDiagonal(0, 5);
 // setPiece(0, currentPlayer);
 // setPiece(0, currentPlayer);
 // changePlayer();
