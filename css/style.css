@@ -38,3 +38,9 @@ nav a {
 body{
     /* margin-top: 250px; */
 }
+
+h6 {
+    position: absolute;
+    right: 10px;
+    font-size: 18px;
+}

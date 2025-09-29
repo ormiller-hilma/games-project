@@ -1,3 +1,4 @@
+console.log(localStorage.key)
 let board = []
 let divBoard = []
 
