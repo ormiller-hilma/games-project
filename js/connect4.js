@@ -5,21 +5,24 @@ let countRed = localStorage.getItem("redWins");
 let countYellow = localStorage.getItem("yellowWins");
 let canPlay = true;
 let isGameOver = false;
-let sessionPointsRed = sessionStorage.getItem("redPoints")
-let sessionPointsYellow = sessionStorage.getItem("yellowPoints")
+
+let sessionPointsRed = parseInt(sessionStorage.getItem("redPoints"));
+let sessionPointsYellow = parseInt(sessionStorage.getItem("yellowPoints"));
+
+if (isNaN(sessionPointsRed) || isNaN(sessionPointsYellow)) {
+    sessionPointsRed = 0;
+    sessionPointsYellow = 0;
+    sessionStorage.setItem("redPoints", sessionPointsRed.toString());
+    sessionStorage.setItem("yellowPoints", sessionPointsYellow.toString());
+}
+
 
 if (countRed === null || countYellow === null) {
     localStorage.setItem("redWins", 0)
     localStorage.setItem("yellowWins", 0)
 }
-
-if (sessionPointsRed === null || sessionPointsYellow === null) {
-    sessionStorage.setItem("redPoints", 0)
-    sessionStorage.setItem("yellowPoints", 0)
-}
-
-sessionPointsRed = parseInt(sessionPointsRed)
-sessionPointsYellow = parseInt(sessionPointsYellow)
+console.log("sdsadfsadasd " + sessionPointsRed)
+console.log("sdaasdadasdada " + sessionPointsYellow)
 
 const body = document.querySelector("body")
 const newGame = document.getElementById("newGame")
