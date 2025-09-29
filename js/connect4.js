@@ -9,7 +9,7 @@ if(countRed === null || countYellow === null) {
 }
 
 const body = document.querySelector("body")
-const switchPlayer = document.getElementById("switchPlayer")
+const newGame = document.getElementById("newGame")
 const turnInfo = document.getElementById("turnInfo")
 const yellowBox = document.getElementById("yellow")
 const redBox = document.getElementById("red")
@@ -259,7 +259,9 @@ createBoard();
 // setPiece(0, currentPlayer);
 // setPiece(0, currentPlayer);
 
-switchPlayer.addEventListener("click", changePlayer)
+newGame.addEventListener("click", function() {
+    window.location.reload();
+})
 
 
 
