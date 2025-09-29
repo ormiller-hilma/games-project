@@ -209,17 +209,17 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
         if (board[nextColumnIndex][nextRowIndex] !== color) {
             break; // no wins in this diagonal
         }
-        //
-        pieceArray.push([nextColumnIndex, nextRowIndex])
-        nextColumnIndex++;
-        nextRowIndex--;
-        if (pieceArray.length >= 4) {
+
+        pieceArray.push([nextColumnIndex, nextRowIndex]) // adds the square to an array
+        nextColumnIndex++; // go to the next column in the diagonal
+        nextRowIndex--; // go to the next row in the diagonal
+        if (pieceArray.length >= 4) { // check that 4 squares were added
             setWinner(color);
             // Mark squares
             for (let i = 0; i < pieceArray.length; i++) {
                 const columnI = pieceArray[i][0];
                 const rowI = pieceArray[i][1];
-                divBoard[columnI][rowI].classList.add("markedSquare");
+                divBoard[columnI][rowI].classList.add("markedSquare"); // play animation on the squares
             }
         }
     }
@@ -237,7 +237,7 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
         if (board[nextColumnIndex][nextRowIndex] !== color) {
             break; // no wins in this diagonal
         }
-        //
+
         pieceArray.push([nextColumnIndex, nextRowIndex]);
         nextColumnIndex--;
         nextRowIndex--;
