@@ -495,9 +495,7 @@ function updateLeaderboard() {
     //   for (let i = 1; i < table.rows.length; i++) {
     //     table.deleteRow(i);
     //   }
-    while (table.rows.length > 1) {
-        table.children(1).remove();
-    }
+    table.innerHTML = ""
 
     for (let i = 0; i < valueArray.length; i++) {
         let tr = document.createElement("tr");
