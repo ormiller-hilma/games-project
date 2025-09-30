@@ -31,7 +31,7 @@ nav {
 nav a {
     border: 1px solid black;
     flex: 1;
-    border-radius: 5%;
+    border-radius: 10px;
     padding: 5px;
     background-color: rgb(184, 196, 196);
     text-decoration: none;

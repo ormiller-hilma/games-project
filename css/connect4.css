@@ -181,6 +181,42 @@ h2 {
   padding: 5px 10px;
 }
 
+#leaderboard {
+  background-color: rgb(216, 224, 255);
+  width: 250px;
+  height: 400px;
+  position: absolute;
+  top: 200px;
+  left: 75px;
+  border: 2px dotted black;
+  border-radius: 25px;
+  font-size: 24px;
+  padding: 5px 10px;
+  text-align: center;
+  overflow-y: scroll;
+}
+
+#leaderboard::-webkit-scrollbar {
+  display: none; 
+}
+
+#leaderboard-table {
+  text-align: center;
+  margin: 0 auto;
+  direction: rtl;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+#leaderboard-table,#leaderboard-table th,#leaderboard-table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+#leaderboard-table th, #leaderboard-table td {
+  width:100px
+}
+
 body {
   background-image: linear-gradient(
       rgba(255, 255, 255, 0.6),
