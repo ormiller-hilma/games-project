@@ -6,8 +6,8 @@ let canPlay = false;
 let isGameOver = false;
 
 // names of players
-let player1Name = "אדום"
-let player2Name = "צהוב"
+let player1Name = "אדום";
+let player2Name = "צהוב";
 
 // get points from local storage
 let sessionPointsRed = parseInt(sessionStorage.getItem("redPoints"));
@@ -27,40 +27,39 @@ let countYellow = parseInt(localStorage.getItem("yellowWins"));
 if (isNaN(countRed) || isNaN(countYellow)) {
     countRed = 0;
     countYellow = 0;
-    console.log(countRed + " " + countYellow)
+    console.log(countRed + " " + countYellow);
     localStorage.setItem("redWins", countRed.toString());
     localStorage.setItem("yellowWins", countYellow.toString());
 }
 
 // dom elements
-const body = document.querySelector("body")
-const newGame = document.getElementById("newGame")
-const turnInfo = document.getElementById("turnInfo")
-const yellowBox = document.getElementById("yellow")
-const redBox = document.getElementById("red")
+const body = document.querySelector("body");
+const newGame = document.getElementById("newGame");
+const turnInfo = document.getElementById("turnInfo");
+const yellowBox = document.getElementById("yellow");
+const redBox = document.getElementById("red");
 
 // determain who turn it is
-let currentPlayer = "red"
+let currentPlayer = "red";
 
 // the winner of the round
 let winner = "";
 
-const audio = new Audio("../audio/winner.mp3")
+const audio = new Audio("../audio/winner.mp3");
 
 // change the turn the next player
 function changePlayer() {
     if (winner === "") {
         if (currentPlayer === "red") {
-            currentPlayer = "yellow"
-            turnInfo.innerHTML = `תור ${player2Name}`
-            yellowBox.style.opacity = "100%"
-            redBox.style.opacity = "25%"
-        }
-        else {
+            currentPlayer = "yellow";
+            turnInfo.innerHTML = `תור ${player2Name}`;
+            yellowBox.style.opacity = "100%";
+            redBox.style.opacity = "25%";
+        } else {
             currentPlayer = "red";
-            turnInfo.innerHTML = `תור ${player1Name}`
-            redBox.style.opacity = "100%"
-            yellowBox.style.opacity = "25%"
+            turnInfo.innerHTML = `תור ${player1Name}`;
+            redBox.style.opacity = "100%";
+            yellowBox.style.opacity = "25%";
         }
     }
 }
@@ -76,7 +75,7 @@ function createBoard() {
     for (let i = 0; i < columns; i++) {
         for (let j = 0; j < rows; j++) {
             const square = document.createElement("div");
-            container.appendChild(square)
+            container.appendChild(square);
             divBoard[j][i] = square;
             square.addEventListener("click", () => {
                 inputToColumn(j); // adds event to detetect when the column is clicked
@@ -106,7 +105,7 @@ function getAvilableSlotInColumn(columnArray) {
 
 function setPiece(columnIndex, color) {
     const columnArray = board[columnIndex];
-    avilableSlot = getAvilableSlotInColumn(columnArray) // gets the first empty slot
+    avilableSlot = getAvilableSlotInColumn(columnArray); // gets the first empty slot
     if (avilableSlot === -1) return; // return if no avilable slot
     board[columnIndex][avilableSlot] = color.charAt(0).toUpperCase(); // sets visual board to color
     divBoard[columnIndex][avilableSlot].style.backgroundColor = color; // sets square to color
@@ -115,8 +114,8 @@ function setPiece(columnIndex, color) {
 
     // check for wins
 
-    checkWinnerColumn(columnIndex)
-    checkWinnerRow(columnIndex, avilableSlot)
+    checkWinnerColumn(columnIndex);
+    checkWinnerRow(columnIndex, avilableSlot);
 
     // check each square for diagonal win
     for (let i = 0; i < board.length; i++) {
@@ -127,7 +126,7 @@ function setPiece(columnIndex, color) {
 
     // check for draw
     if (isBoardFull() && winner === "") {
-        setWinner("Draw")
+        setWinner("Draw");
     }
 }
 
@@ -145,28 +144,27 @@ function audioPlay() {
     setTimeout(function () {
         audio.pause();
         audio.currentTime = 0;
-    }, 3000) // stop the audio after 3 seconds
+    }, 3000); // stop the audio after 3 seconds
 }
-
 
 function setWinner(color) {
     winner = color;
     // if winner is red
     if (color === "R") {
-        turnInfo.innerHTML = `${player1Name} מנצח`
+        turnInfo.innerHTML = `${player1Name} מנצח`;
         countRed++;
         sessionPointsRed++;
-        console.log("I AM A RED POINT++")
-        localStorage.setItem("redWins", countRed)
-        sessionStorage.setItem("redPoints", sessionPointsRed)
+        console.log("I AM A RED POINT++");
+        localStorage.setItem("redWins", countRed);
+        sessionStorage.setItem("redPoints", sessionPointsRed);
     }
     // if winner is yellow
     if (color === "Y") {
-        turnInfo.innerHTML = `${player2Name} מנצח`
+        turnInfo.innerHTML = `${player2Name} מנצח`;
         countYellow++;
         sessionPointsYellow++;
-        localStorage.setItem("yellowWins", countYellow)
-        sessionStorage.setItem("yellowPoints", sessionPointsYellow)
+        localStorage.setItem("yellowWins", countYellow);
+        sessionStorage.setItem("yellowPoints", sessionPointsYellow);
     }
 
     // update points
@@ -178,16 +176,20 @@ function setWinner(color) {
     }
 
     isGameOver = true; // stop getting input from user
-    setTimeout(audioPlay, 800) // play audio after 0.8s
+    setTimeout(audioPlay, 800); // play audio after 0.8s
     setTimeout(() => {
-        showGameOverScreen(color)
+        showGameOverScreen(color);
     }, 1600); // show the game over screen after 1.6s
-
+    updateLeaderboard();
 }
 
 function checkWinnerColumn(columnIndex) {
     for (let i = 0; i < board[columnIndex].length - 3; i++) {
-        if (board[columnIndex][i] === board[columnIndex][i + 1] && board[columnIndex][i + 1] === board[columnIndex][i + 2] && board[columnIndex][i + 2] === board[columnIndex][i + 3]) {
+        if (
+            board[columnIndex][i] === board[columnIndex][i + 1] &&
+            board[columnIndex][i + 1] === board[columnIndex][i + 2] &&
+            board[columnIndex][i + 2] === board[columnIndex][i + 3]
+        ) {
             if (board[columnIndex][i] !== 0) {
                 setWinner(board[columnIndex][i]);
 
@@ -204,8 +206,11 @@ function checkWinnerColumn(columnIndex) {
 function checkWinnerRow(columnIndex, rowIndex) {
     let color = board[columnIndex][rowIndex];
     for (let i = 0; i < 4; i++) {
-        if (board[i][rowIndex] === color && board[i + 1][rowIndex] === color &&
-            board[i + 2][rowIndex] === color && board[i + 3][rowIndex] === color
+        if (
+            board[i][rowIndex] === color &&
+            board[i + 1][rowIndex] === color &&
+            board[i + 2][rowIndex] === color &&
+            board[i + 3][rowIndex] === color
         ) {
             // set winner
             setWinner(color);
@@ -244,12 +249,13 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
             break; // no wins in this diagonal
         }
 
-        pieceArray.push([nextColumnIndex, nextRowIndex]) // adds the square to an array
+        pieceArray.push([nextColumnIndex, nextRowIndex]); // adds the square to an array
 
         nextColumnIndex++; // go to the next column in the diagonal
         nextRowIndex--; // go to the next row in the diagonal
 
-        if (pieceArray.length >= 4) { // check that 4 squares were added
+        if (pieceArray.length >= 4) {
+            // check that 4 squares were added
             setWinner(color);
             // Mark squares
             for (let i = 0; i < pieceArray.length; i++) {
@@ -289,7 +295,6 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
             }
         }
     }
-
 }
 
 // gets column and drops piece accordingly
@@ -305,7 +310,7 @@ function inputToColumn(columnIndex) {
     canPlay = false;
 
     // faling piece
-    const fallingDiv = document.createElement("div")
+    const fallingDiv = document.createElement("div");
     fallingDiv.classList.add("falling-piece");
     fallingDiv.style.backgroundColor = currentPlayer;
     setChildPiecePos(fallingDiv, startingPosition);
@@ -325,19 +330,19 @@ function inputToColumn(columnIndex) {
 }
 
 // keyboard input
-document.addEventListener('keydown', function (event) {
+document.addEventListener("keydown", function (event) {
     const key = event.key; // key that was pressed
-    if (key < '1' || key > '7') return; // return if key is not the 1-7 keys
+    if (key < "1" || key > "7") return; // return if key is not the 1-7 keys
     inputToColumn(key - 1); // send valid input
 });
 
 newGame.addEventListener("click", function () {
     window.location.reload();
-})
+});
 
 // offset the falling piece to be on the top of the screen
 function setChildPiecePos(piece, pos) {
-    piece.style.setProperty('transform', `translateY(${pos}px)`, 'important');
+    piece.style.setProperty("transform", `translateY(${pos}px)`, "important");
 }
 
 // move the falling piece down until it reaches its parent
@@ -345,12 +350,21 @@ function moveDown(piece, startingPos, amountOfFrames, time) {
     let updatedPosition = startingPos;
     for (let i = 0; i < amountOfFrames; i++) {
         updatedPosition -= startingPos / amountOfFrames;
-        setTimeout(setChildPiecePos, i * (time / amountOfFrames), piece, updatedPosition);
+        setTimeout(
+            setChildPiecePos,
+            i * (time / amountOfFrames),
+            piece,
+            updatedPosition
+        );
     }
 }
 
 function updateSavedPoints(winner) {
-    if (sessionStorage.getItem("player1") === null || sessionStorage.getItem("player2") === null) return;
+    if (
+        sessionStorage.getItem("player1") === null ||
+        sessionStorage.getItem("player2") === null
+    )
+        return;
 
     if (winner === "R") {
         const player1Name = sessionStorage.getItem("player1");
@@ -367,7 +381,6 @@ function updateSavedPoints(winner) {
 
 // show the game over screen and set it based on the winner
 function showGameOverScreen(winner) {
-    // get elements
     const screen = document.getElementById("end-game-screen");
     const gameoverText = document.getElementById("gameover-text");
     const pointsText = document.getElementById("points");
@@ -381,12 +394,8 @@ function showGameOverScreen(winner) {
     if (winner === "Draw") {
         gameoverText.innerHTML = "תקו";
     }
-
-    // play animation on the screen and make it visible
     screen.classList.add("swirlingObject");
     screen.style.visibility = "visible";
-
-    // update score based on points
     pointsText.innerHTML = `<span style="color: yellow">${sessionPointsYellow}</span> | <span style="color: red">${sessionPointsRed}</span>`
 }
 
@@ -398,16 +407,13 @@ function initializePlayerNameInputs() {
         player2Name = sessionStorage.getItem("player2");
         return;
     }
-
-    // show the start screen only if no player names were given
     document.getElementById("start-screen").style.visibility = "visible";
-
     document
         .getElementById("players-form")
         .addEventListener("submit", function (event) {
             event.preventDefault();
 
-            document.getElementById("start-screen").style.visibility = "hidden"
+            document.getElementById("start-screen").style.visibility = "hidden";
 
             const playerOne = document.getElementById("playerOne");
             const playerTwo = document.getElementById("playerTwo");
@@ -416,27 +422,39 @@ function initializePlayerNameInputs() {
             const red = playerTwo.value;
             let yellowP;
             let redP;
-            if (localStorage.getItem(yellow) !== null || localStorage.getItem(red) !== null) {
+            if (
+                localStorage.getItem(yellow) !== null ||
+                localStorage.getItem(red) !== null
+            ) {
                 yellowP = 0;
                 redP = 0;
-            }
-            else {
-                yellowP = parseInt(localStorage.getItem(yellow))
-                redP = parseInt(localStorage.getItem(yellow))
+            } else {
+                yellowP = parseInt(localStorage.getItem(yellow));
+                redP = parseInt(localStorage.getItem(yellow));
             }
 
-            console.log("Yellow: " + yellow + " Red: " + red)
+            console.log("Yellow: " + yellow + " Red: " + red);
 
-            sessionStorage.setItem("player1", yellow)
-            sessionStorage.setItem("player2", red)
-            if (localStorage.getItem(yellow) === null && localStorage.getItem(red) !== localStorage.getItem(yellow))
-                localStorage.setItem(yellow, yellowP)
-            if (localStorage.getItem(red) === null && localStorage.getItem(red) !== localStorage.getItem(yellow))
-                localStorage.setItem(red, redP)
+            sessionStorage.setItem("player1", yellow);
+            sessionStorage.setItem("player2", red);
+            if (
+                localStorage.getItem(yellow) === null &&
+                localStorage.getItem(red) !== localStorage.getItem(yellow)
+            )
+                localStorage.setItem(yellow, yellowP);
+            if (
+                localStorage.getItem(red) === null &&
+                localStorage.getItem(red) !== localStorage.getItem(yellow)
+            )
+                localStorage.setItem(red, redP);
 
             canPlay = true;
 
-            if (sessionStorage.getItem("player1") === "" || sessionStorage.getItem("player2") === "") return;
+            if (
+                sessionStorage.getItem("player1") === "" ||
+                sessionStorage.getItem("player2") === ""
+            )
+                return;
             player1Name = sessionStorage.getItem("player1");
             player2Name = sessionStorage.getItem("player2");
             changePlayer();
@@ -455,14 +473,14 @@ function updateLeaderboard() {
     // get the values that are inside the keys and save them inside another array
     const valueArray = keys.map((item) => {
         return localStorage.getItem(item);
-    })
+    });
 
     // sort the array from highest value to lowest value
     valueArray.sort((a, b) => parseInt(b) - parseInt(a));
 
     console.log(valueArray);
 
-    // go through each value in valueArray and replace it with its original key name
+    // go through each key and ... 
     for (let i = 0; i < keys.length; i++) {
         const itemValue = localStorage.getItem(keys[i]);
         for (let j = 0; j < valueArray.length; j++) {
@@ -473,7 +491,25 @@ function updateLeaderboard() {
         }
     }
 
+    const table = document.getElementById("leaderboard-table");
+    //   for (let i = 1; i < table.rows.length; i++) {
+    //     table.deleteRow(i);
+    //   }
+    while (table.rows.length > 1) {
+        table.children(1).remove();
+    }
 
+    for (let i = 0; i < valueArray.length; i++) {
+        let tr = document.createElement("tr");
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        td1.innerHTML = valueArray[i];
+        td2.innerHTML = localStorage.getItem(valueArray[i]);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        table.appendChild(tr);
+    }
+    console.log(table.children[0]);
 }
 
 // initialize the game
