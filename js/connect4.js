@@ -499,12 +499,9 @@ function updateLeaderboard() {
     }
 
     const table = document.getElementById("leaderboard-table");
-    //   for (let i = 1; i < table.rows.length; i++) {
-    //     table.deleteRow(i);
-    //   }
-    while (table.rows.length > 1) {
-        table.innerHTML = "";
-    }
+
+    table.innerHTML = "";
+
     let th1 = document.createElement("th");
     th1.innerHTML = "שם";
     let th2 = document.createElement("th");
