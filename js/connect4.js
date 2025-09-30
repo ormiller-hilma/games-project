@@ -474,7 +474,7 @@ function updateLeaderboard() {
 
     // remove keys that are not relevent
     keys = keys.filter((item) => {
-        return item !== "redWins" && item !== "yellowWins" && item !== "";
+        return item !== "redWins" && item !== "yellowWins" && item !== "" && item !== "username" && !Number.isNaN(Number(localStorage.getItem(item)));
     });
 
     // get the values that are inside the keys and save them inside another array

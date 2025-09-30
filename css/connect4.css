@@ -97,7 +97,7 @@ h2 {
   display: flex;
   align-items: center;
   flex-direction: column;
-  row-gap: 25px;
+  row-gap: 15px;
   font-family: sans-serif;
 }
 
@@ -197,7 +197,7 @@ h2 {
 }
 
 #leaderboard::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 
 #leaderboard-table {
@@ -208,13 +208,16 @@ h2 {
   margin-top: 10px;
 }
 
-#leaderboard-table,#leaderboard-table th,#leaderboard-table td {
+#leaderboard-table,
+#leaderboard-table th,
+#leaderboard-table td {
   border: 1px solid black;
   border-collapse: collapse;
 }
 
-#leaderboard-table th, #leaderboard-table td {
-  width:100px
+#leaderboard-table th,
+#leaderboard-table td {
+  width: 100px;
 }
 
 body {
