@@ -228,7 +228,7 @@ body {
 }
 
 #start-screen {
-  visibility: visible;
+  visibility: hidden;
   position: fixed;
   left: 50%;
   top: 56%;
@@ -242,4 +242,10 @@ body {
   font-family: sans-serif;
   background-color: rgb(236, 172, 88);
   border: rgb(90, 58, 11) solid 6px;
+}
+
+@media (max-width: 1200px) {
+  #info {
+    display: none;
+  }
 }

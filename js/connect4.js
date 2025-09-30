@@ -2,8 +2,12 @@ let board = [];
 let divBoard = [];
 
 // determains if input is accepted
-let canPlay = true;
+let canPlay = false;
 let isGameOver = false;
+
+// names of players
+let player1Name = "אדום"
+let player2Name = "צהוב"
 
 // get points from local storage
 let sessionPointsRed = parseInt(sessionStorage.getItem("redPoints"));
@@ -48,13 +52,13 @@ function changePlayer() {
     if (winner === "") {
         if (currentPlayer === "red") {
             currentPlayer = "yellow"
-            turnInfo.innerHTML = "תור הצהוב"
+            turnInfo.innerHTML = `תור ${player2Name}`
             yellowBox.style.opacity = "100%"
             redBox.style.opacity = "25%"
         }
         else {
             currentPlayer = "red";
-            turnInfo.innerHTML = "תור האדום"
+            turnInfo.innerHTML = `תור ${player1Name}`
             redBox.style.opacity = "100%"
             yellowBox.style.opacity = "25%"
         }
@@ -149,7 +153,7 @@ function setWinner(color) {
     winner = color;
     // if winner is red
     if (color === "R") {
-        turnInfo.innerHTML = "האדום מנצח"
+        turnInfo.innerHTML = `${player1Name} מנצח`
         countRed++;
         sessionPointsRed++;
         console.log("I AM A RED POINT++")
@@ -158,12 +162,16 @@ function setWinner(color) {
     }
     // if winner is yellow
     if (color === "Y") {
-        turnInfo.innerHTML = "הצהוב מנצח"
+        turnInfo.innerHTML = `${player2Name} מנצח`
         countYellow++;
         sessionPointsYellow++;
         localStorage.setItem("yellowWins", countYellow)
         sessionStorage.setItem("yellowPoints", sessionPointsYellow)
     }
+
+    // update points
+    updateSavedPoints(color);
+
     // check if draw
     if (color === "Draw") {
         turnInfo.innerHTML = "תקו";
@@ -341,6 +349,22 @@ function moveDown(piece, startingPos, amountOfFrames, time) {
     }
 }
 
+function updateSavedPoints(winner) {
+    if (sessionStorage.getItem("player1") === null || sessionStorage.getItem("player2") === null) return;
+
+    if (winner === "R") {
+        const player1Name = sessionStorage.getItem("player1");
+        const player1Points = Number(localStorage.getItem(player1Name));
+        localStorage.setItem(player1Name, player1Points + 1);
+    }
+
+    if (winner === "Y") {
+        const player2Name = sessionStorage.getItem("player2");
+        const player2Points = Number(localStorage.getItem(player2Name));
+        localStorage.setItem(player2Name, player2Points + 1);
+    }
+}
+
 // show the game over screen and set it based on the winner
 function showGameOverScreen(winner) {
     const screen = document.getElementById("end-game-screen");
@@ -348,51 +372,72 @@ function showGameOverScreen(winner) {
     const pointsText = document.getElementById("points");
 
     if (winner === "R") {
-        gameoverText.innerHTML = "המשחק נגמר אדום ניצח"
+        gameoverText.innerHTML = `המשחק נגמר ${player1Name} ניצח`;
     }
     if (winner === "Y") {
-        gameoverText.innerHTML = "המשחק נגמר צהוב ניצח"
+        gameoverText.innerHTML = `המשחק נגמר ${player2Name} ניצח`;
     }
     if (winner === "Draw") {
-        gameoverText.innerHTML = "תקו"
+        gameoverText.innerHTML = "תקו";
     }
     screen.classList.add("swirlingObject");
     screen.style.visibility = "visible";
     pointsText.innerHTML = `<span style="color: yellow">${sessionPointsYellow}</span> | <span style="color: red">${sessionPointsRed}</span>`
 }
 
-document
-  .getElementById("players-form")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    document.getElementById("start-screen").style.visibility = "hidden"
-
-    // runs after legal submition
-    const playerOne = document.getElementById("playerOne");
-    const playerTwo = document.getElementById("playerTwo");
-
-    const yellow = playerOne.value;
-    const red = playerTwo.value;
-    let yellowP;
-    let redP;
-    if (localStorage.getItem(yellow) !== null || localStorage.getItem(red) !==null) {
-        yellowP = 0;
-        redP = 0;
+function initializePlayerNameInputs() {
+    if (sessionStorage.getItem("player1") !== null && sessionStorage.getItem("player2") !== null) {
+        canPlay = true;
+        if (sessionStorage.getItem("player1") === "" || sessionStorage.getItem("player2") === "") return;
+        player1Name = sessionStorage.getItem("player1");
+        player2Name = sessionStorage.getItem("player2");
+        return;
     }
-    else {
-        yellowP = parseInt(localStorage.getItem(yellow))
-        redP = parseInt(localStorage.getItem(yellow))
-    }
+    document.getElementById("start-screen").style.visibility = "visible";
+    document
+        .getElementById("players-form")
+        .addEventListener("submit", function (event) {
+            event.preventDefault();
 
-    console.log("Yellow: " + yellow + " Red: " + red)
+            document.getElementById("start-screen").style.visibility = "hidden"
 
-    localStorage.setItem("player1", yellow)
-    localStorage.setItem("player2", red)
-    localStorage.setItem(yellow, yellowP)
-    localStorage.setItem(red, redP)
-  });
+            const playerOne = document.getElementById("playerOne");
+            const playerTwo = document.getElementById("playerTwo");
+
+            const yellow = playerOne.value;
+            const red = playerTwo.value;
+            let yellowP;
+            let redP;
+            if (localStorage.getItem(yellow) !== null || localStorage.getItem(red) !== null) {
+                yellowP = 0;
+                redP = 0;
+            }
+            else {
+                yellowP = parseInt(localStorage.getItem(yellow))
+                redP = parseInt(localStorage.getItem(yellow))
+            }
+
+            console.log("Yellow: " + yellow + " Red: " + red)
+
+            sessionStorage.setItem("player1", yellow)
+            sessionStorage.setItem("player2", red)
+            if (localStorage.getItem(yellow) === null && localStorage.getItem(red) !== localStorage.getItem(yellow))
+                localStorage.setItem(yellow, yellowP)
+            if (localStorage.getItem(red) === null && localStorage.getItem(red) !== localStorage.getItem(yellow))
+                localStorage.setItem(red, redP)
+
+            canPlay = true;
+
+            if (sessionStorage.getItem("player1") === "" || sessionStorage.getItem("player2") === "") return;
+            player1Name = sessionStorage.getItem("player1");
+            player2Name = sessionStorage.getItem("player2");
+            changePlayer();
+        });
+}
+
+
 
 // initialize the game
 createBoard();
+initializePlayerNameInputs();
 changePlayer();
