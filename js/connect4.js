@@ -396,13 +396,20 @@ function showGameOverScreen(winner) {
     }
     screen.classList.add("swirlingObject");
     screen.style.visibility = "visible";
-    pointsText.innerHTML = `<span style="color: yellow">${sessionPointsYellow}</span> | <span style="color: red">${sessionPointsRed}</span>`
+    pointsText.innerHTML = `<span style="color: yellow">${sessionPointsYellow}</span> | <span style="color: red">${sessionPointsRed}</span>`;
 }
 
 function initializePlayerNameInputs() {
-    if (sessionStorage.getItem("player1") !== null && sessionStorage.getItem("player2") !== null) {
+    if (
+        sessionStorage.getItem("player1") !== null &&
+        sessionStorage.getItem("player2") !== null
+    ) {
         canPlay = true;
-        if (sessionStorage.getItem("player1") === "" || sessionStorage.getItem("player2") === "") return;
+        if (
+            sessionStorage.getItem("player1") === "" ||
+            sessionStorage.getItem("player2") === ""
+        )
+            return;
         player1Name = sessionStorage.getItem("player1");
         player2Name = sessionStorage.getItem("player2");
         return;
@@ -480,7 +487,7 @@ function updateLeaderboard() {
 
     console.log(valueArray);
 
-    // go through each key and ... 
+    // go through each key and ...
     for (let i = 0; i < keys.length; i++) {
         const itemValue = localStorage.getItem(keys[i]);
         for (let j = 0; j < valueArray.length; j++) {
@@ -495,8 +502,15 @@ function updateLeaderboard() {
     //   for (let i = 1; i < table.rows.length; i++) {
     //     table.deleteRow(i);
     //   }
-    table.innerHTML = ""
-
+    while (table.rows.length > 1) {
+        table.innerHTML = "";
+    }
+    let th1 = document.createElement("th");
+    th1.innerHTML = "שם";
+    let th2 = document.createElement("th");
+    th2.innerHTML = "נצחונות";
+    table.appendChild(th1);
+    table.appendChild(th2);
     for (let i = 0; i < valueArray.length; i++) {
         let tr = document.createElement("tr");
         let td1 = document.createElement("td");
