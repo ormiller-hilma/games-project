@@ -20,7 +20,7 @@ document
       return;
     }
     if (localStorage.getItem(user) === password) {
-      alert("הכל תקין! ההתחברות מתבצעת");
+      // alert("הכל תקין! ההתחברות מתבצעת");
       window.location.href = "../html/games.html"
       return;
     }
