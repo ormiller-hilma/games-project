@@ -293,7 +293,7 @@ function inputToColumn(columnIndex) {
     if (avilableSlot === -1) return; // return if not available slot
 
     const fallTime = 600;
-    const startingPosition = -800;
+    const startingPosition = -600;
     const amountOfFrames = 1000;
 
     canPlay = false;
