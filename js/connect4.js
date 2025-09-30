@@ -363,6 +363,38 @@ function showGameOverScreen(winner) {
     pointsText.innerHTML = `${sessionPointsYellow} | ${sessionPointsRed}`
 }
 
+document
+  .getElementById("players-form")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    document.getElementById("start-screen").style.visibility = "hidden"
+
+    // runs after legal submition
+    const playerOne = document.getElementById("playerOne");
+    const playerTwo = document.getElementById("playerTwo");
+
+    const yellow = playerOne.value;
+    const red = playerTwo.value;
+    let yellowP;
+    let redP;
+    if (localStorage.getItem(yellow) !== null || localStorage.getItem(red) !==null) {
+        yellowP = 0;
+        redP = 0;
+    }
+    else {
+        yellowP = parseInt(localStorage.getItem(yellow))
+        redP = parseInt(localStorage.getItem(yellow))
+    }
+
+    console.log("Yellow: " + yellow + " Red: " + red)
+
+    localStorage.setItem("player1", yellow)
+    localStorage.setItem("player2", red)
+    localStorage.setItem(yellow, yellowP)
+    localStorage.setItem(red, redP)
+  });
+
 // initialize the game
 createBoard();
 changePlayer();
