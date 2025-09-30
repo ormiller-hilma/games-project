@@ -32,8 +32,7 @@ document
 
     localStorage.setItem(user, password)
     localStorage.setItem("username", user)
-    alert("הכל תקין! ההרשמה מתבצעת");
-    console.log(localStorage.key)
+    // alert("הכל תקין! ההרשמה מתבצעת");
     window.location.href = "../html/login.html"
   });
 

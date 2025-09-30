@@ -190,3 +190,20 @@ body {
   background-repeat: no-repeat;
   background-size: 100%;
 }
+
+#start-screen {
+  visibility: visible;
+  position: fixed;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  font-family: sans-serif;
+  background-color: rgb(236, 172, 88);
+  border: rgb(90, 58, 11) solid 6px;
+}
