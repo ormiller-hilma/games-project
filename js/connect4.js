@@ -435,9 +435,41 @@ function initializePlayerNameInputs() {
         });
 }
 
+function updateLeaderboard() {
+    // get all keys from local storage
+    let keys = Object.keys(localStorage);
 
+    // remove keys that are not relevent
+    keys = keys.filter((item) => {
+        return item !== "redWins" && item !== "yellowWins";
+    });
+
+    // get the values that are inside the keys and save them inside another array
+    const valueArray = keys.map((item) => {
+        return localStorage.getItem(item);
+    })
+
+    // sort the array from highest value to lowest value
+    valueArray.sort((a, b) => parseInt(b) - parseInt(a));
+
+    console.log(valueArray);
+
+    // go through each key and ... 
+    for (let i = 0; i < keys.length; i++) {
+        const itemValue = localStorage.getItem(keys[i]);
+        for (let j = 0; j < valueArray.length; j++) {
+            if (valueArray[j] === itemValue) {
+                valueArray[j] = keys[i];
+                break;
+            }
+        }
+    }
+
+
+}
 
 // initialize the game
 createBoard();
 initializePlayerNameInputs();
 changePlayer();
+updateLeaderboard();
