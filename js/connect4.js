@@ -367,6 +367,7 @@ function updateSavedPoints(winner) {
 
 // show the game over screen and set it based on the winner
 function showGameOverScreen(winner) {
+    // get elements
     const screen = document.getElementById("end-game-screen");
     const gameoverText = document.getElementById("gameover-text");
     const pointsText = document.getElementById("points");
@@ -380,8 +381,12 @@ function showGameOverScreen(winner) {
     if (winner === "Draw") {
         gameoverText.innerHTML = "תקו";
     }
+
+    // play animation on the screen and make it visible
     screen.classList.add("swirlingObject");
     screen.style.visibility = "visible";
+
+    // update score based on points
     pointsText.innerHTML = `<span style="color: yellow">${sessionPointsYellow}</span> | <span style="color: red">${sessionPointsRed}</span>`
 }
 
@@ -393,7 +398,10 @@ function initializePlayerNameInputs() {
         player2Name = sessionStorage.getItem("player2");
         return;
     }
+
+    // show the start screen only if no player names were given
     document.getElementById("start-screen").style.visibility = "visible";
+
     document
         .getElementById("players-form")
         .addEventListener("submit", function (event) {
@@ -454,7 +462,7 @@ function updateLeaderboard() {
 
     console.log(valueArray);
 
-    // go through each key and ... 
+    // go through each value in valueArray and replace it with its original key name
     for (let i = 0; i < keys.length; i++) {
         const itemValue = localStorage.getItem(keys[i]);
         for (let j = 0; j < valueArray.length; j++) {
