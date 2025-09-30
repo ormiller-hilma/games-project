@@ -236,10 +236,10 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
             break; // no wins in this diagonal
         }
 
+        pieceArray.push([nextColumnIndex, nextRowIndex]) // adds the square to an array
+
         nextColumnIndex++; // go to the next column in the diagonal
         nextRowIndex--; // go to the next row in the diagonal
-
-        pieceArray.push([nextColumnIndex, nextRowIndex]) // adds the square to an array
 
         if (pieceArray.length >= 4) { // check that 4 squares were added
             setWinner(color);
@@ -247,7 +247,7 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
             for (let i = 0; i < pieceArray.length; i++) {
                 const columnI = pieceArray[i][0];
                 const rowI = pieceArray[i][1];
-                divBoard[columnI][rowI].classList.add("markedSquare"); // play animation on the squares
+                divBoard[columnI][rowI].classList.add("markedSquare"); // play animation on winning squares
             }
         }
     }
@@ -266,17 +266,15 @@ function checkWinnerDiagonal(columnIndex, rowIndex) {
             break; // no wins in this diagonal
         }
 
+        pieceArray.push([nextColumnIndex, nextRowIndex]);
+
         nextColumnIndex--;
         nextRowIndex--;
-
-        pieceArray.push([nextColumnIndex, nextRowIndex]);
 
         if (pieceArray.length >= 4) {
             setWinner(color);
             // Mark squares
             for (let i = 0; i < pieceArray.length; i++) {
-                console.log(i);
-                console.log(pieceArray[i])
                 const columnI = pieceArray[i][0];
                 const rowI = pieceArray[i][1];
                 divBoard[columnI][rowI].classList.add("markedSquare");
@@ -360,7 +358,7 @@ function showGameOverScreen(winner) {
     }
     screen.classList.add("swirlingObject");
     screen.style.visibility = "visible";
-    pointsText.innerHTML = `${sessionPointsYellow} | ${sessionPointsRed}`
+    pointsText.innerHTML = `<span style="color: yellow">${sessionPointsYellow}</span> | <span style="color: red">${sessionPointsRed}</span>`
 }
 
 // initialize the game

@@ -114,6 +114,7 @@ h2 {
 #screen-background p {
   font-size: 50px;
   font-family: sans-serif;
+  font-weight: bold;
 }
 
 .swirlingObject {
@@ -178,4 +179,14 @@ h2 {
   border-radius: 25px;
   font-size: 24px;
   padding: 5px 10px;
+}
+
+body {
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.6)
+    ),
+    url("../images/garden2.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
